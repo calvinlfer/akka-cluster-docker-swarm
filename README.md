@@ -3,6 +3,10 @@ _This is a demonstration of how to use Docker Swarm to bootstrap an Akka Cluster
 
 [![Build Status](https://travis-ci.org/calvinlfer/akka-cluster-docker-swarm.svg?branch=master)](https://travis-ci.org/calvinlfer/akka-cluster-docker-swarm)
 
+## Pre-requisites
+A functional Docker Swarm (preferably with multiple nodes) with access to a manager node
+- [Play with Docker](http://labs.play-with-docker.com) works well
+
 ## Problem statement ##
 The process of discovering seed nodes and joining an existing cluster is a perilous journey especially in cloud 
 environments due to the ephemeral nature of instances. You can get into situations where you form two or more clusters
@@ -69,3 +73,7 @@ the cluster using the tasks in the seed services.
 
 **Note**: This project takes care of split brain resolution (keep-majority style) and bootstrapping a cluster. We use an 
 open-source Split Brain Resolver from [akka-batteries](https://github.com/PaytmLabs/akka-batteries#role-based-split-brain-resolver).
+
+#### Credits ####
+- [Bret Fisher](https://github.com/BretFisher) for giving me a solid understanding of Docker, Compose, and Swarm
+- [Vadim Vasciuc](https://lostintimedev.com) for inspiring me with his article on Swarm
