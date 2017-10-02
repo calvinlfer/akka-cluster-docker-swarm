@@ -1,7 +1,7 @@
 # Akka Cluster Sample (using ConstructR with ZooKeeper)
 _This is a demonstration of how to use Docker Swarm to bootstrap an Akka Cluster._
 
-[![Build Status](https://travis-ci.org/calvinlfer/akka-cluster-sample.svg?branch=master)](https://travis-ci.org/calvinlfer/akka-cluster-sample)
+[![Build Status](https://travis-ci.org/calvinlfer/akka-cluster-docker-swarm.svg?branch=master)](https://travis-ci.org/calvinlfer/akka-cluster-docker-swarm)
 
 ## Problem statement
 The process of discovering seed nodes and joining an existing cluster is a perilous journey especially in cloud 
