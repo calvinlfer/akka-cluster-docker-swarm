@@ -1,9 +1,9 @@
-# Akka Cluster Sample (using ConstructR with ZooKeeper)
+# Running an Akka Cluster on Docker Swarm #
 _This is a demonstration of how to use Docker Swarm to bootstrap an Akka Cluster._
 
 [![Build Status](https://travis-ci.org/calvinlfer/akka-cluster-docker-swarm.svg?branch=master)](https://travis-ci.org/calvinlfer/akka-cluster-docker-swarm)
 
-## Problem statement
+## Problem statement ##
 The process of discovering seed nodes and joining an existing cluster is a perilous journey especially in cloud 
 environments due to the ephemeral nature of instances. You can get into situations where you form two or more clusters
 if you incorrectly detect that no seed nodes are up causing massive problems for your data. Thankfully, service discovery 
@@ -12,11 +12,11 @@ single cluster forms correctly. However, now service orchestration mechanisms ar
 allow us to utilize their native features (e.g. Docker Swarm and Kubernetes) to avoid using a separate coordination 
 service in order to discover seed nodes.
 
-## What does this project do?
+## What does this project do? ##
 This project utilizes Docker Swarm services, overlay networks and stacks in order to deploy a highly-available and 
 resilient Akka Cluster. 
 
-## Running the cluster on Swarm
+## Running the cluster on Swarm ##
 Simply hop onto any manager node in the Swarm and copy the `docker-compose.yaml` to that machine. Then create a stack
 ```bash
 docker stack deploy -c docker-compose.yaml <<your-stack-name>>
@@ -24,14 +24,14 @@ docker stack deploy -c docker-compose.yaml <<your-stack-name>>
 
 This will create the necessary services and overlay networks on the Swarm to run the application
 
-## Running locally using Docker Compose
+## Running locally using Docker Compose ##
 The nice part about using Docker Swarm is that it plays well with Docker Compose on your local machine. You can run all
 the containers locally using
 ```bash
 docker-compose up 
 ```
 
-## Under the hood
+## Under the hood ##
 We make use of 3 services:
 - `application-seed-1`: the first seed node with a replication of 1
 - `application-seed-2`: the second seed node with a replication of 1
@@ -49,7 +49,7 @@ As you can tell, the more seed node services you have, the higher the guarantee 
 having them re-join the cluster without causing split brain to occur. Here we use 2 for illustration purposes but 3 or 5
 would be a better number. The more of these services you have, the bigger the docker-compose.yaml becomes.
 
-### Resiliency
+### Resiliency ###
 Resiliency testing has been done on a 3 node Docker Swarm cluster in AWS. First, the stack was deployed using 
 `docker stack deploy -c docker-compose.yaml test-stack`. You can start to identify containers by drilling down into
 the stack using `docker stack ps test-stack` and finding the services that make up the stack. Once you find the 
@@ -61,10 +61,11 @@ effect and begin removing them. In addition to this, the Docker Swarm orchestrat
 between our desired state and the running state and re-deploy another task to make up for the container we terminated.
 Viewing the logs of that newly brought up container, we see that it successfully joins the Akka cluster using 
 `docker container logs <container-id>`, you can add on `| grep Younger` to ensure that it joins the existing Akka 
-cluster and that it is not the oldest node in the cluster for the Shard coordinator. This shows that the application can
-sustain the loss of a single seed node and that it can heal automatically without intervention. You can freely kill any
-of the tasks in the `application` service and they will also come back up and join the cluster using the tasks in the
-seed services. 
+cluster and that it is not the oldest node in the cluster for the Shard coordinator. 
+
+This shows that the application can sustain the loss of a single seed node and that it can heal automatically without 
+intervention. You can freely kill any of the tasks in the `application` service and they will also come back up and join 
+the cluster using the tasks in the seed services. 
 
 **Note**: This project takes care of split brain resolution (keep-majority style) and bootstrapping a cluster. We use an 
 open-source Split Brain Resolver from [akka-batteries](https://github.com/PaytmLabs/akka-batteries#role-based-split-brain-resolver).
