@@ -33,9 +33,9 @@ docker-compose up
 
 ## Under the hood
 We make use of 3 services:
-- application-seed-1: the first seed node with a replication of 1
-- application-seed-2: the second seed node with a replication of 1
-- application: the application that relies on the above seed nodes for cluster bootstrapping with a replication of N 
+- `application-seed-1`: the first seed node with a replication of 1
+- `application-seed-2`: the second seed node with a replication of 1
+- `application`: the application that relies on the above seed nodes for cluster bootstrapping with a replication of N 
   where N is odd
 
 We make use of 2 seed nodes because in case one of the seed nodes go down, it can rely on the other seed node to re-join
