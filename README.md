@@ -46,8 +46,8 @@ We make use of 2 seed nodes because in case one of the seed nodes go down, it ca
 the already existing cluster. If we used one seed node, we would not be able to re-join the cluster as the Session ID 
 would be different.
 
-This architecture relies on the fact that all seed nodes cannot go down. If this were to happen (all seed nodes do go 
-down but the normal nodes remain in the formed cluster) then the seed nodes would not be able to join the already 
+This architecture *relies* on the fact that **all seed nodes _cannot_ go down**. If this were to happen (all seed nodes 
+do go down but the normal nodes remain in the formed cluster) then the seed nodes would not be able to join the already 
 formed cluster then when the seed nodes came back up, they would begin to form a new cluster thereby causing split brain.
 As you can tell, the more seed node services you have, the higher the guarantee of being able to lose seed nodes and 
 having them re-join the cluster without causing split brain to occur. Here we use 2 for illustration purposes but 3 or 5
